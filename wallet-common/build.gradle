@@ -1,0 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.46'
+    compile group: 'org.web3j',name:'core',version: '3.4.0'
+    compile 'com.google.guava:guava:25.0-jre'
+}

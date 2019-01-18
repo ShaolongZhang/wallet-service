@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <property name="loggingRoot" value="/home/ubuntu/log" />
+
+  <property name="loggingLevel" value="INFO" />
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] [%class] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${loggingRoot}/service-${coin}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${loggingRoot}/service-${coin}.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="thinkbit-listener" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${loggingRoot}/listener-${coin}.log</file>>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${loggingRoot}/listener-${coin}.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="thinkbit-notify" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${loggingRoot}/notify-${coin}.log</file>>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${loggingRoot}/notify-${coin}.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="listener" additivity="false">
+    <level value="${loggingLevel}" />
+    <appender-ref ref="thinkbit-listener"/>
+  </logger>
+
+
+  <logger name="notify" additivity="false">
+    <level value="${loggingLevel}" />
+    <appender-ref ref="thinkbit-notify"/>
+  </logger>
+
+
+  <!-- 默认的日志信息 -->
+  <root level="${loggingLevel}">
+    <appender-ref ref="console"/>
+    <appender-ref ref="file"/>
+  </root>
+</configuration>

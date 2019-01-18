@@ -1,0 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    group 'com.zhangsl.wallet'
+    version '1.0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}

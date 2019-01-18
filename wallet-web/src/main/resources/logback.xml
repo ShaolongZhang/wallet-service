@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <property name="loggingRoot" value="/home/ubuntu/log" />
+
+  <property name="loggingLevel" value="INFO" />
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] [%class] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${loggingRoot}/service.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${loggingRoot}/service.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="thinkbit-controller" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${loggingRoot}/controller.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${loggingRoot}/controller.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="thinkbit-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${loggingRoot}/error.log</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${loggingRoot}/error.log.%d{yyyy-MM-dd}</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <logger name="controller" additivity="false">
+    <level value="${loggingLevel}" />
+    <appender-ref ref="thinkbit-controller"/>
+  </logger>
+
+
+  <logger name="error" additivity="false">
+    <level value="${loggingLevel}" />
+    <appender-ref ref="thinkbit-error"/>
+  </logger>
+
+  <!-- 默认的日志信息 -->
+  <root level="${loggingLevel}">
+    <appender-ref ref="console"/>
+    <appender-ref ref="file"/>
+  </root>
+</configuration>
