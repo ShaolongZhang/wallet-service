@@ -5,11 +5,11 @@ import java.io.Serializable;
 /**
  * Created by zhang.shaolong on 2018/3/10.
  */
-public  class ThinkQueryBalance implements Serializable {
+public  class QueryTranscation implements Serializable {
 
     private String coinType; //币种信息
 
-    private String address;
+    private String transaction;
 
     public String getCoinType() {
         return coinType;
@@ -19,19 +19,19 @@ public  class ThinkQueryBalance implements Serializable {
         this.coinType = coinType;
     }
 
-    public String getAddress() {
-        return address;
+    public String getTransaction() {
+        return transaction;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setTransaction(String transaction) {
+        this.transaction = transaction;
     }
 
     @Override
     public String toString() {
-        return "ThinkQueryBalance{" +
+        return "ThinkQueryTranscation{" +
                 "coinType='" + coinType + '\'' +
-                ", address='" + address + '\'' +
+                ", transaction='" + transaction + '\'' +
                 '}';
     }
 }

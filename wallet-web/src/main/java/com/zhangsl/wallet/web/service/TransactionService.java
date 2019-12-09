@@ -48,12 +48,12 @@ public class TransactionService {
     /**
      * 创建一个transcation
      *
-     * @param thinkTranscation
+     * @param transcation
      * @return
      */
-    public String create(ThinkTranscation thinkTranscation) {
-        String coinType = thinkTranscation.getCoinType().toUpperCase();
-        boolean isExist = redisService.hasAddress(coinType,thinkTranscation.getFrom());
+    public String create(Transcation transcation) {
+        String coinType = transcation.getCoinType().toUpperCase();
+        boolean isExist = redisService.hasAddress(coinType, transcation.getFrom());
         if (!isExist) {
             throw new WalletException(ErrorCode.ADDRESS_ERROR);
         }
@@ -62,10 +62,10 @@ public class TransactionService {
         //提现的金额，每个币都不一样
         //需要的费用信息
         BigDecimal gasPrice = null;
-        if (thinkTranscation.getGas() != null) {
-            gasPrice = thinkTranscation.getGas();
+        if (transcation.getGas() != null) {
+            gasPrice = transcation.getGas();
         }
-        String transactionString = wallet.createTransaction(coinType, thinkTranscation.getFrom(), thinkTranscation.getTo(), thinkTranscation.getAmount(), gasPrice);
+        String transactionString = wallet.createTransaction(coinType, transcation.getFrom(), transcation.getTo(), transcation.getAmount(), gasPrice);
         return transactionString;
     }
 
@@ -73,38 +73,38 @@ public class TransactionService {
     /**
      * 创建一个合约信息
      *
-     * @param thinkContract
+     * @param contract
      * @return
      */
-    public String createContract(ThinkContract thinkContract) {
+    public String createContract(Contract contract) {
         Web3j web3j = EthWeb3jClient.getInstance().getClient();
         //获取gasprice信息
         BigInteger gasInteger = null;
-        if (thinkContract.getGasPrice() != null) {
-            gasInteger = EthHandle.etherToWei(thinkContract.getGasPrice());
+        if (contract.getGasPrice() != null) {
+            gasInteger = EthHandle.etherToWei(contract.getGasPrice());
         } else {
             //默认用以太坊网络的gas
             gasInteger = EthHandle.getInstance().getGasPrice(web3j);
         }
         //gaslimit 信息
-        if (thinkContract.getGasLimit() == null) {
-            thinkContract.setGasLimit(EthConstant.TOKEN_GAS_LIMIT);
+        if (contract.getGasLimit() == null) {
+            contract.setGasLimit(EthConstant.TOKEN_GAS_LIMIT);
         }
-        return contractWallet.createContract(thinkContract.getFrom(), gasInteger,thinkContract.getGasLimit(),thinkContract.getData());
+        return contractWallet.createContract(contract.getFrom(), gasInteger, contract.getGasLimit(), contract.getData());
     }
 
     /**
      * 发送加密后的信息
      *
-     * @param thinkSendTranscation
+     * @param sendTranscation
      * @return
      */
-    public String send(ThinkSendTranscation thinkSendTranscation) {
-        String coinType = thinkSendTranscation.getCoinType();
+    public String send(SendTranscation sendTranscation) {
+        String coinType = sendTranscation.getCoinType();
         Wallet wallet = getWallet(coinType);
-        String transactionId = wallet.sendSignedTransaction(coinType, thinkSendTranscation.getTransaction());
+        String transactionId = wallet.sendSignedTransaction(coinType, sendTranscation.getTransaction());
         redisService.setTxid(coinType,transactionId);
-        redisService.setTxSign(transactionId,thinkSendTranscation.getTransaction());
+        redisService.setTxSign(transactionId, sendTranscation.getTransaction());
         return transactionId;
     }
 
@@ -136,13 +136,13 @@ public class TransactionService {
     /**
      * 查询区块的余额信息
      *
-     * @param thinkQueryBalance
+     * @param queryBalance
      * @return
      */
-    public BigDecimal queryBalance(ThinkQueryBalance thinkQueryBalance) {
-        String coinType = thinkQueryBalance.getCoinType().toUpperCase();
+    public BigDecimal queryBalance(QueryBalance queryBalance) {
+        String coinType = queryBalance.getCoinType().toUpperCase();
         Wallet wallet = getWallet(coinType);
-        BigDecimal balance = wallet.queryBalance(coinType, thinkQueryBalance.getAddress());
+        BigDecimal balance = wallet.queryBalance(coinType, queryBalance.getAddress());
         return balance;
     }
 

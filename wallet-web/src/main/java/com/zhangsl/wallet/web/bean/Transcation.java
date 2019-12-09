@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 /**
  * Created by zhang.shaolong on 2018/3/10.
  */
-public  class ThinkTranscation implements Serializable {
+public  class Transcation implements Serializable {
 
     private String coinType; //币种信息
 

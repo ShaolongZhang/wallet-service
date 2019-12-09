@@ -22,7 +22,7 @@
     </encoder>
   </appender>
 
-  <appender name="thinkbit-controller" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  <appender name="controller-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>${loggingRoot}/controller.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${loggingRoot}/controller.log.%d{yyyy-MM-dd}</fileNamePattern>
@@ -34,7 +34,7 @@
   </appender>
 
 
-  <appender name="thinkbit-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  <appender name="error-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>${loggingRoot}/error.log</file>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>ERROR</level>
@@ -51,13 +51,13 @@
 
   <logger name="controller" additivity="false">
     <level value="${loggingLevel}" />
-    <appender-ref ref="thinkbit-controller"/>
+    <appender-ref ref="controller-log"/>
   </logger>
 
 
   <logger name="error" additivity="false">
     <level value="${loggingLevel}" />
-    <appender-ref ref="thinkbit-error"/>
+    <appender-ref ref="error-log"/>
   </logger>
 
   <!-- 默认的日志信息 -->

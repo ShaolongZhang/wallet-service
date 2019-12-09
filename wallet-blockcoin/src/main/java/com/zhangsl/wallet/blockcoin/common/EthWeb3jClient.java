@@ -1,11 +1,11 @@
 package com.zhangsl.wallet.blockcoin.common;
 
+import com.zhangsl.wallet.blockcoin.eth.filter.JsonRpcWeb3j;
+import com.zhangsl.wallet.common.coin.CoinType;
+import com.zhangsl.wallet.common.exception.WalletException;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Async;
-import thinkbit.wallet.coin.eth.filter.JsonRpcWeb3j;
-import thinkbit.wallet.common.coin.CoinType;
-import thinkbit.wallet.common.exception.ThinkbitWalletException;
 
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public class EthWeb3jClient {
 
     public String getVersion() {
         if (web3j != null) {
-            throw new ThinkbitWalletException("error");
+            throw new WalletException("error");
         }
         try {
             return web3j.web3ClientVersion().send().getWeb3ClientVersion();

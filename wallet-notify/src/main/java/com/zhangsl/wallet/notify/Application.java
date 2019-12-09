@@ -1,11 +1,5 @@
 package com.zhangsl.wallet.notify;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.zhangsl.wallet.common.util.FormatUtils;
 import com.zhangsl.wallet.notify.listener.Listener;
 import org.springframework.boot.SpringApplication;
@@ -55,13 +49,5 @@ public class Application {
     @Bean
     public StringRedisTemplate template(RedisConnectionFactory connectionFactory) {
         return new StringRedisTemplate(connectionFactory);
-    }
-
-
-    @Bean
-    public AmazonSQS queue() {
-        AWSCredentialsProvider provider = new AWSStaticCredentialsProvider(new BasicAWSCredentials("AKIAIFU3Z5E7XG5IQYSA", "YCZ6disqg4HdVDVbhUqMWtiKLYfwPYXHUz731axx"));
-        AmazonSQSClientBuilder builder = AmazonSQSClientBuilder.standard();
-        return builder.withRegion(Regions.AP_NORTHEAST_1).withCredentials(provider).build();
     }
 }

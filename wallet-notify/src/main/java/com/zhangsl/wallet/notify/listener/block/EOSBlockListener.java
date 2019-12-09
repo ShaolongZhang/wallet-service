@@ -1,5 +1,6 @@
 package com.zhangsl.wallet.notify.listener.block;
 
+import com.zhangsl.wallet.common.coin.CoinType;
 import org.springframework.stereotype.Component;
 
 /**

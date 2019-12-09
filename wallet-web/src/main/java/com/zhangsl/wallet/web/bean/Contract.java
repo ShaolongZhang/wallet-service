@@ -7,7 +7,7 @@ import java.math.BigInteger;
  * 合约发送
  * Created by zhang.shaolong on 2018/4/28.
  */
-public class ThinkContract {
+public class Contract {
 
     private String from; //发送合约的地址
 

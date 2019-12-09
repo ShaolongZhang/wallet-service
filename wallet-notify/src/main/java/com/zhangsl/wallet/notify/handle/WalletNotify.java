@@ -1,7 +1,6 @@
 package com.zhangsl.wallet.notify.handle;
 
 
-import com.amazonaws.services.sqs.AmazonSQS;
 import com.zhangsl.wallet.common.bean.TxBean;
 import com.zhangsl.wallet.common.redis.RedisContant;
 import com.zhangsl.wallet.common.util.FormatUtils;
@@ -25,10 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WalletNotify {
 
     private static final Logger logger = LoggerFactory.getLogger("notify");
-
-    @Autowired
-    private AmazonSQS amazonSQS;
-
+    
     @Autowired
     protected TransactionRedis transactionRedis;
 
@@ -52,7 +48,7 @@ public class WalletNotify {
         String messge = JsonUtils.toJSON(bean);
         logger.info("notify-->wallet service:"+messge);
         try {
-            amazonSQS.sendMessage(walletNotiry,messge);
+            //TODO 通知到其他到的业务数据
             setConfirm(bean);
         } catch (Exception e) {
             logger.error("notify error "+ messge);
@@ -67,7 +63,7 @@ public class WalletNotify {
         String messge = JsonUtils.toJSON(bean);
         logger.info("notify-->wallet service:"+messge);
         try {
-            amazonSQS.sendMessage(walletNotiry,messge);
+            //TODO 通知到其他到的业务数据
             setConfirm(bean);
         } catch (Exception e) {
             logger.error("notify error "+messge,e);
@@ -76,8 +72,8 @@ public class WalletNotify {
 
 
     public void setConfirm(TxBean bean){
-        if (bean.getConfirm()>=notifyConfirmApplication.getConfirm(bean.getCoin())) {
-            transactionRedis.setValue(FormatUtils.format(RedisContant.NOTIFY_C_T,bean.getCoin(),bean.getType(),bean.getTransaction()),String.valueOf(bean.getConfirm()),1,TimeUnit.HOURS);
+        if (bean.getConfirm() >= notifyConfirmApplication.getConfirm(bean.getCoin())) {
+            transactionRedis.setValue(FormatUtils.format(RedisContant.NOTIFY_C_T, bean.getCoin(), bean.getType(), bean.getTransaction()), String.valueOf(bean.getConfirm()), 1, TimeUnit.HOURS);
         }
     }
 

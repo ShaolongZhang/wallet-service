@@ -37,24 +37,24 @@ public class WalletController {
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
         logger.info("wallet transaction create parms:"+body);
-        ThinkTranscation thinkTranscation = JsonUtils.toT(body, ThinkTranscation.class);
-        if (thinkTranscation == null) {
+        Transcation transcation = JsonUtils.toT(body, Transcation.class);
+        if (transcation == null) {
             logger.error("create json to is error");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        if(thinkTranscation.getTo().equals(thinkTranscation.getFrom())) {
+        if(transcation.getTo().equals(transcation.getFrom())) {
             logger.error("create from to is Equal");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        if (thinkTranscation.getAmount().compareTo(BigDecimal.ZERO)< 0){
+        if (transcation.getAmount().compareTo(BigDecimal.ZERO)< 0){
             logger.error("create amount error");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        if (thinkTranscation.getGas()!=null && thinkTranscation.getGas().compareTo(BigDecimal.ZERO)< 0){
+        if (transcation.getGas()!=null && transcation.getGas().compareTo(BigDecimal.ZERO)< 0){
             logger.error("gas amount error");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        String transaction = transactionService.create(thinkTranscation);
+        String transaction = transactionService.create(transcation);
         return ResultBuilder.buildSuccessResult(transaction);
     }
 
@@ -65,16 +65,16 @@ public class WalletController {
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
         logger.info("wallet transaction send parms:"+body);
-        ThinkSendTranscation thinkSendTranscation = JsonUtils.toT(body, ThinkSendTranscation.class);
-        if (thinkSendTranscation == null) {
+        SendTranscation sendTranscation = JsonUtils.toT(body, SendTranscation.class);
+        if (sendTranscation == null) {
             logger.error(" send json to is error");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        if (StringUtils.isEmpty(thinkSendTranscation.getTransaction())){
+        if (StringUtils.isEmpty(sendTranscation.getTransaction())){
             logger.error(" send transaction to is error");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        String transactionId = transactionService.send(thinkSendTranscation);
+        String transactionId = transactionService.send(sendTranscation);
         return ResultBuilder.buildSuccessResult(transactionId);
 
     }
@@ -97,11 +97,11 @@ public class WalletController {
         if (StringUtils.isEmpty(body)) {
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        ThinkQueryTranscation thinkQueryTranscation = JsonUtils.toT(body, ThinkQueryTranscation.class);
-        if (thinkQueryTranscation == null) {
+        QueryTranscation queryTranscation = JsonUtils.toT(body, QueryTranscation.class);
+        if (queryTranscation == null) {
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        TransactionMessage transaction = transactionService.query(thinkQueryTranscation.getCoinType(), thinkQueryTranscation.getTransaction());
+        TransactionMessage transaction = transactionService.query(queryTranscation.getCoinType(), queryTranscation.getTransaction());
         return ResultBuilder.buildSuccessResult(transaction);
 
     }
@@ -113,11 +113,11 @@ public class WalletController {
         if (StringUtils.isEmpty(body)) {
             return ResultBuilder.buildFailedResult();
         }
-        ThinkQueryBalance thinkQueryBalance = JsonUtils.toT(body, ThinkQueryBalance.class);
-        if (thinkQueryBalance == null) {
+        QueryBalance queryBalance = JsonUtils.toT(body, QueryBalance.class);
+        if (queryBalance == null) {
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        BigDecimal balance = transactionService.queryBalance(thinkQueryBalance);
+        BigDecimal balance = transactionService.queryBalance(queryBalance);
         return ResultBuilder.buildSuccessResult(balance);
 
     }
@@ -128,15 +128,15 @@ public class WalletController {
         if (StringUtils.isEmpty(body)) {
             return ResultBuilder.buildFailedResult();
         }
-        ThinkContract thinkContract = JsonUtils.toT(body, ThinkContract.class);
-        if (thinkContract == null) {
+        Contract contract = JsonUtils.toT(body, Contract.class);
+        if (contract == null) {
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        if (StringUtils.isEmpty(thinkContract.getData()) || StringUtils.isEmpty(thinkContract.getFrom())){
+        if (StringUtils.isEmpty(contract.getData()) || StringUtils.isEmpty(contract.getFrom())){
             logger.error(" from  or data  is error");
             return ResultBuilder.buildFailedResult(ErrorCode.PARAM_ERROR.getCode(),ErrorCode.PARAM_ERROR.getDescription());
         }
-        String transaction = transactionService.createContract(thinkContract);
+        String transaction = transactionService.createContract(contract);
         return ResultBuilder.buildSuccessResult(transaction);
 
     }
@@ -155,13 +155,5 @@ public class WalletController {
         String register = transactionService.register(body);
         return ResultBuilder.buildSuccessResult(register);
 
-    }
-
-
-
-    @RequestMapping(value="/check")
-    @ResponseBody
-    public String check() {
-         return "200";
     }
 }

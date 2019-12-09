@@ -29,7 +29,7 @@ public class EthTxCommon {
     //根据这个可以查询余额信息
     public static final String ETHER_API_BASE = ETHER_API +"?module={0}&action={1}&apikey={2}";
 
-    private final static String key = "4T8IJCMITUFQPSS2DKY41W7X2QMI865CRW";
+    private final static String key = "";
 
 
     public static  boolean validateSend(EthCoinService ethCoinService, StringRedisTemplate stringRedisTemplate, String txHash) {
