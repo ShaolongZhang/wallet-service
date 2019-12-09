@@ -68,8 +68,8 @@ public class ContractWallet extends BaseEthWallet {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("from",from);
         jsonObject.put("data",data);
-        //eos执行映射的地址信息
-        jsonObject.put("to","0xd0a6E6C54DbC68Db5db3A091B171A77407Ff7ccf");
+        //TODO eos执行映射的地址信息
+        jsonObject.put("to","");
         jsonObject.put("value", Numeric.encodeQuantity(BigInteger.ZERO));
         jsonObject.put("nonce",Numeric.encodeQuantity(nonce));
         jsonObject.put("gasPrice",Numeric.encodeQuantity(gasPrice));
